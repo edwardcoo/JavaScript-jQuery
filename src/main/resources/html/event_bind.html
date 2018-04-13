@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件绑定</title>
+</head>
+<body>
+<input type="button" value="click me dom" id="btn0" onclick="helloDom()">
+<input type="button" value="click me script" id="btn">
+<input type="button" value="click me listener" id="btn1">
+<input type="button" value="click me delegate" id="btn2">
+
+<script>
+    //dom
+    var btn0 = document.getElementById("btn0");
+    function helloDom(){
+        alert("hello world from dom!");
+    }
+    // script
+    var btn = document.getElementById("btn");
+    btn.onclick = function(){
+        alert("hello world from script!");
+    }
+    btn.onclick = function(){
+        alert("hello world from script =====!");
+    }
+    // listener
+    var btn1 = document.getElementById("btn1");
+    btn1.addEventListener("click",helloListen);
+    btn1.addEventListener("click",helloListen2);
+    function helloListen(){
+        alert("hello world from listener !");
+    }
+    function helloListen2(){
+        alert("hello world from listener 2222222222!");
+    }
+
+    // 事件解绑
+//    btn0.removeAttribute("onclick");
+//    btn.onclick= null;
+//    btn1.removeEventListener("click",function () {
+//        alert("hello world from listener 2222222222!");
+//    });
+
+    // delegate 委托代理
+    var btn2 = document.getElementById("btn2");
+    document.onclick = function(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if(target == btn0){
+            alert(btn0.value);
+        }else if(target == btn){
+            alert(btn.value);
+        }else if(target == btn1){
+            alert(btn1.value);
+        }else if(target == btn2){
+            alert(btn2.value);
+        }
+    }
+
+    // $("body").delegate("div",'click',function () {
+    //     console.log('div delegate----'+$(this).attr("id"));
+    // });
+
+
+    // 事件操作封装
+    function addEvent(obj,ev,fn){
+        if(obj.attachEvent){//针对IE浏览器
+            obj.attachEvent('on'+ev,fn)
+        }else{//针对FF与chrome
+            obj.addEventListener(ev,fn,false)//当为true时采用事件捕获，当为false采用事件冒泡
+            //程序员可以自己选择绑定事件时采用事件捕获还是事件冒泡。
+        }
+    }
+    function removeEvent(target,type,fn){
+        if(target.removeEventListener){
+            target.removeEventListener(type,fn);
+        }else{
+            target.detachEvent("on"+type,fn);
+        }
+    }
+</script>
+
+</body>
+</html>
