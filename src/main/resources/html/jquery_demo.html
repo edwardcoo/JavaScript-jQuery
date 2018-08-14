@@ -5,11 +5,22 @@
     <title>jQuery extend</title>
 </head>
 <body>
+<form id="testForm">
+    <input type="text" name="id" value="1"/>
+    <input type="hidden" name="hid" value="100"/>
+    <input type="text" name="name" value="张三"/>
+</form>
+<input type="button" value="获取jsonString" id="jsonString">
+<span id="jsonResult">jsonResult</span>
+
+<br>
+<br>
 <input type="text" value="0" id="input1">+
 <input type="text" value="0" id="input2">
 <input type="button" value="普通计算" id="calc">
 <input type="button" value="插件计算" id="calc_plugin">
 <input type="button" value="合并" id="calc_merge">
+
 
 
 

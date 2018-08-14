@@ -197,4 +197,31 @@ function getFormatDate(theDate){
         CurrentDate += "0" + Day ;   
     }   
     return CurrentDate;   
-}   
+}
+
+/**
+ * 获取下一个周几
+ * @param week  周几 1234567
+ * @returns {Date}
+ */
+function getNextWeekday(date,week) {
+    var now = new Date();
+    if(typeof date === 'object'){
+        now = date;
+    }
+    var nowTime = now.getTime();
+    var nowDay = now.getDay();
+    var oneDayTime = 1000 * 60 * 60 * 24;
+    if(week==undefined || week=='' || week < 0){
+        return now;
+    }
+    if(week > 7){
+        week = week%7;
+    }
+    var tuesdayTime = nowTime + (week-nowDay)* oneDayTime;
+    if(tuesdayTime < nowTime){
+        tuesdayTime = tuesdayTime + 7*oneDayTime;
+    }
+    return new Date(tuesdayTime);
+}
+console.log(getNextWeekday(-18))

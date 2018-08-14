@@ -30,6 +30,13 @@ $(function () {
         var  result = $.add(a,b);
         alert(result);
     });
+    $("#jsonString").click(function () {
+        var result = $("#testForm").serialize();
+        var arr = $("#testForm").serializeArray();
+        var json = $("#testForm").serializeJson();
+        var jsonString = JSON.stringify(json)
+        $("#jsonResult").html(jsonString);
+    });
 });
 
 function add(a,b) {
@@ -59,6 +66,25 @@ $.fn.extend({
 //     this.attr("value",value) ;
 //     return this;
 // }
+
+
+//将form表单转换为json数据
+$.fn.serializeJson=function(){
+    var serializeObj={};
+    var array=this.serializeArray(); //将form表单序列化数组对象
+    $(array).each(function(){  //遍历表单数组拼接json串
+        if(serializeObj[this.name]){
+            if($.isArray(serializeObj[this.name])){
+                serializeObj[this.name].push(this.value);
+            }else{
+                serializeObj[this.name]=[serializeObj[this.name],this.value];
+            }
+        }else{
+            serializeObj[this.name]=this.value;
+        }
+    });
+    return serializeObj;
+};
 
 
 (function ($) {
